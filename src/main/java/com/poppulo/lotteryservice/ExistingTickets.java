@@ -8,8 +8,8 @@ public class ExistingTickets {
     Map<Long, Ticket> tickets = new HashMap<>();
 
     public boolean addTicket(Ticket ticket) {
-        if (!tickets.containsKey(ticket.uniqueId)) {
-            tickets.put(ticket.uniqueId, ticket);
+        if (!tickets.containsKey(ticket.getUniqueId())) {
+            tickets.put(ticket.getUniqueId(), ticket);
             return true;
         }
         return false;

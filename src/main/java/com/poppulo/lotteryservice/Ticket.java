@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Ticket {
 
-    long uniqueId;
-    List<Integer[]> lines = new ArrayList<>();
+    private long uniqueId;
+    private List<Integer[]> lines = new ArrayList<>();
 
     public Ticket(long uniqueId) {
         this.uniqueId = uniqueId;
@@ -22,5 +22,9 @@ public class Ticket {
 
     public List<Integer[]> getLines() {
         return lines;
+    }
+
+    public long getUniqueId() {
+        return this.uniqueId;
     }
 }
