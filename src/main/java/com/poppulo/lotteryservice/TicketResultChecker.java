@@ -1,11 +1,9 @@
 package com.poppulo.lotteryservice;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class TicketRestultChecker {
+public class TicketResultChecker {
 
     public String getResult(Ticket ticket) {
         String result = ""; //should use string builder
@@ -23,8 +21,8 @@ public class TicketRestultChecker {
     }
 
     private String check10(Integer[] l, String result) {
-        int sum = 0;
-        for (Integer i : l) sum+=i;
+        long sum = Arrays.stream(l).mapToLong(num -> num).sum();
+        System.out.println("sum: " + sum);
         if (sum == 2) result += "10";
         return result;
     }

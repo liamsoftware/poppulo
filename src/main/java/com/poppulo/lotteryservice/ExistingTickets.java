@@ -15,4 +15,8 @@ public class ExistingTickets {
         return false;
     }
 
+    public boolean doesExist(long id) {
+        return tickets.containsKey(id);
+    }
+
 }

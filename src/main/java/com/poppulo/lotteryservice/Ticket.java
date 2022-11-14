@@ -27,4 +27,12 @@ public class Ticket {
     public long getUniqueId() {
         return this.uniqueId;
     }
+
+    public void addLine(Integer[] line) {
+        lines.add(line);
+    }
+
+    public int getNumberOfLines() {
+        return lines.size();
+    }
 }

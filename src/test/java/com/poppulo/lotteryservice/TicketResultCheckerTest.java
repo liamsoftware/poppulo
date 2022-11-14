@@ -13,14 +13,14 @@ import static org.mockito.BDDMockito.given;
 
 public class TicketResultCheckerTest {
 
-    public TicketRestultChecker ticketRestultChecker;
+    public TicketResultChecker ticketResultChecker;
     @Mock
     private Ticket ticket;
 
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        this.ticketRestultChecker = new TicketRestultChecker();
+        this.ticketResultChecker = new TicketResultChecker();
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketRestultChecker.getResult(ticket);
+        String r = ticketResultChecker.getResult(ticket);
         assertTrue(r.equals("10"));
     }
 
@@ -42,7 +42,7 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketRestultChecker.getResult(ticket);
+        String r = ticketResultChecker.getResult(ticket);
         assertTrue(r.equals("5"));
     }
 
@@ -53,7 +53,7 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketRestultChecker.getResult(ticket);
+        String r = ticketResultChecker.getResult(ticket);
         assertTrue(r.equals("1"));
     }
 
@@ -64,7 +64,7 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketRestultChecker.getResult(ticket);
+        String r = ticketResultChecker.getResult(ticket);
         assertTrue(r.equals("0"));
     }
 
