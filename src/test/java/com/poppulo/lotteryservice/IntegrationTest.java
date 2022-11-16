@@ -10,17 +10,13 @@ import static org.junit.Assert.*;
 
 public class IntegrationTest {
 
-    private TicketCache ticketCache;
-    private RandomTicketGenerator randomTicketGenerator;
-    private SimpleRulePolicy simpleRulePolicy;
-
     private RestService restService;
 
     @Before
     public void setup() {
-        ticketCache = new TicketCache();
-        randomTicketGenerator = new RandomTicketGenerator();
-        simpleRulePolicy = new SimpleRulePolicy();
+        TicketCache ticketCache = new TicketCache();
+        RandomTicketGenerator randomTicketGenerator = new RandomTicketGenerator();
+        SimpleRulePolicy simpleRulePolicy = new SimpleRulePolicy();
         restService = new RestService(ticketCache, randomTicketGenerator, simpleRulePolicy);
     }
 

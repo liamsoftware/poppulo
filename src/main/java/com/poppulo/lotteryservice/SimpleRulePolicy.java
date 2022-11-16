@@ -18,10 +18,10 @@ public class SimpleRulePolicy implements RulePolicy {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public static final String TICKET_CONTAINS_SUM_OF_TWO = "10";
-    public static final String TICKET_CONTAINS_SINGLE_MATCHING_VALUE = "5";
-    public static final String TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST = "1";
-    public static final String NOT_A_WINNING_TICKET = "0";
+    public static final int TICKET_CONTAINS_SUM_OF_TWO = 10;
+    public static final int TICKET_CONTAINS_SINGLE_MATCHING_VALUE = 5;
+    public static final int TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST = 1;
+    public static final int NOT_A_WINNING_TICKET = 0;
 
     //get the big o notation for these - worse case analysis
 
@@ -29,13 +29,15 @@ public class SimpleRulePolicy implements RulePolicy {
         if (ticket.isResultChecked()) {
             return ticket;//need to do more than just return...
         }
+
         List<Integer[]> lines = ticket.getLines();
         log.info("computeResult: computing ticket id: {} with {} number of lines.", ticket.getUniqueId(),
                 ticket.getNumberOfLines());
 
         for (Integer[] aLine : lines) {
-            String result = checkResult(aLine);
-            ticket.addLineResult(result, Arrays.toString(aLine));
+            int score = checkResult(aLine);
+            Result r = new Result(score, Arrays.toString(aLine));
+            ticket.addResult(r);
         }
 
         ticket.sortResults();
@@ -43,7 +45,7 @@ public class SimpleRulePolicy implements RulePolicy {
         return ticket;
     }
 
-    private String checkResult(Integer[] aLine) {
+    private int checkResult(Integer[] aLine) {
         if (isSumOfTwo(aLine)) return TICKET_CONTAINS_SUM_OF_TWO;
         if (doesContainSingleValue(aLine)) return TICKET_CONTAINS_SINGLE_MATCHING_VALUE;
         if (doesContainDifferingThirdAndFourthValuesFromTheFirst(aLine))

@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -36,8 +35,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 1, 1};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        String resultString = resultTicket.getResults().get(0);
-        assertTrue(resultString.contains("Result: 10."));
+        Result result = resultTicket.getResults().get(0);
+        assertEquals(10, result.getScore());
     }
 
     @Test
@@ -46,8 +45,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 0, 0};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        String resultString = resultTicket.getResults().get(0);
-        assertTrue(resultString.contains("Result: 5."));
+        Result result = resultTicket.getResults().get(0);
+        assertEquals(5, result.getScore());
     }
 
     @Test
@@ -56,8 +55,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 1, 2};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        String resultString = resultTicket.getResults().get(0);
-        assertTrue(resultString.contains("Result: 1."));
+        Result result = resultTicket.getResults().get(0);
+        assertEquals(1, result.getScore());
     }
 
     @Test
@@ -66,7 +65,7 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {1, 2, 1};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        String resultString = resultTicket.getResults().get(0);
-        assertTrue(resultString.contains("Result: 0."));
+        Result result = resultTicket.getResults().get(0);
+        assertEquals(0, result.getScore());
     }
 }

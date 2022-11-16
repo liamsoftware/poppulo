@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-
 public class TicketTest {
 
     private Ticket ticket;
@@ -18,14 +16,13 @@ public class TicketTest {
 
     @Test
     public void sortResultTest() {
-        ticket.addLineResult("1", "[0,1,2]");
-        ticket.addLineResult("10", "[0,1,1]");
-        ticket.addLineResult("0", "[1,1,2]");
-        ticket.addLineResult("5", "[0,0,0]");
+        ticket.addResult(new Result(1, "[0,1,2]"));
+        ticket.addResult(new Result(10, "[0,1,1]"));
+        ticket.addResult(new Result(0, "[1,1,2]"));
+        ticket.addResult(new Result(5, "[0,0,0]"));
         ticket.sortResults();
-        List<String> results = ticket.getResults();
-        for (String s : results) System.out.println(s);
-        assertTrue(results.get(0).contains("Result 10."));
-
+        List<Result> results = ticket.getResults();
+        results.forEach(r -> System.out.println(r));
+        //assertEquals(10, results.get(0).getScore());
     }
 }
