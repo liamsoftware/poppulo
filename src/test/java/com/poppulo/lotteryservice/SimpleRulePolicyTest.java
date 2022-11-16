@@ -68,4 +68,22 @@ public class SimpleRulePolicyTest {
         Result result = resultTicket.getResults().get(0);
         assertEquals(0, result.getScore());
     }
+
+    @Test
+    public void getResultZeroSecondTest() {
+        Ticket ticket = new Ticket(1L);
+        Integer[] arr = {0, 2, 2};
+        ticket.addLine(arr);
+        Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
+        Result result = resultTicket.getResults().get(0);
+        assertEquals(0, result.getScore());
+    }
+
+    @Test
+    public void returnOriginalTicketWithoutUpdateWhenCheckFlagIsSet() {
+        Ticket ticket = new Ticket(1L);
+        ticket.setChecked();
+        Ticket returnedTicket = simpleRulePolicy.computeResult(ticket);
+        assertEquals(ticket, returnedTicket);
+    }
 }
