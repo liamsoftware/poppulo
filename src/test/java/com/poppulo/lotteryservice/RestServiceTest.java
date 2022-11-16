@@ -68,14 +68,15 @@ public class RestServiceTest {
     @Test
     public void amendTicketNoLinesTest() {
         Ticket t = new Ticket(1L);
+        given(ticketCache.getTicket(1L)).willReturn(t);
         Ticket amendedTicket = restService.amendTicket(1L, -1);
-        assertNull(amendedTicket);
+        assertEquals(0, amendedTicket.getNumberOfLines());
     }
 
     @Test
     public void getTicketStatusTest() {
         given(ticketCache.getTicket(anyLong())).willReturn(ticket);
-        given(simpleRulePolicy.getResult(any(Ticket.class))).willReturn("10");
+        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn("10");
         String result = restService.getTicketStatus(3L);
         assertEquals("10", result);
     }

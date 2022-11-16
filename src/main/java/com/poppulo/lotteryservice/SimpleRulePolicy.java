@@ -17,40 +17,45 @@ public class SimpleRulePolicy implements RulePolicy {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public String getResult(Ticket ticket) {
-        String result = ""; //should use string builder
+    //if a line contains a sum of 2, then result for ticket is 10
+    //else if a line contains all same nums, then result for ticket is 5
+    //else if second and third nums are diff from first, then result for ticket is 1
+    //otherwise result is 1.
+
+    //get the big o notation for these - worse case analysis
+
+    public String computeResult(Ticket ticket) {
         List<Integer[]> lines = ticket.getLines();
+        log.info("computeResult: computing ticket id: {} with {} number of lines.", ticket.getUniqueId(),
+                ticket.getNumberOfLines());
+        if (isAnyLineASumOfTwo(lines)) return "10";
+        else if (doesAnyLineContainASingleValue(lines)) return "5";
+        else if (doesAnyLineContainDifferingThirdAndFourthValuesFromTheFirst(lines)) return "1";
+        return "0";
+    }
+
+    private boolean isAnyLineASumOfTwo(List<Integer[]> lines) {
         for (Integer[] l : lines) {
-            log.info("getResult: check line: {}", Arrays.toString(l));
-            result += check10(l,result);
-            if (result.isEmpty()) result += check5(l, result);
-            if (result.isEmpty()) result += check1(l, result);
+            long sum = Arrays.stream(l).mapToLong(num -> num).sum();
+            if (sum == 2) return true;
         }
-        if (result.isEmpty()) {
-            return "0";
-        }
-        //should really be returning an array list of integer results
-        log.info("getResult: result for ticket: [{}] is {}", ticket, result);
-        return result;
+        return false;
     }
 
-    private String check10(Integer[] l, String result) {
-        long sum = Arrays.stream(l).mapToLong(num -> num).sum();
-        if (sum == 2) result += "10";
-        return result;
-    }
-
-    private String check5(Integer[] l, String result) {
-        long count = Arrays.stream(l).distinct().count();
-        if (count == 1) result += "5";
-        return result;
-    }
-
-    private String check1(Integer[] l, String result) {
-        //second and third values are different from the first
-        if (l[1] != l[2]) {
-            if (l[0] != l[1] && l[0] != l[2]) result += "1";
+    private boolean doesAnyLineContainASingleValue(List<Integer[]> lines) {
+        for (Integer[] l : lines) {
+            long count = Arrays.stream(l).distinct().count();
+            if (count == 1) return true;
         }
-        return result;
+        return false;
+    }
+
+    private boolean doesAnyLineContainDifferingThirdAndFourthValuesFromTheFirst(List<Integer[]> lines) {
+        for (Integer[] l : lines) {
+            if (l[1] != l[2]) {
+                if (l[0] != l[1] && l[0] != l[2]) return true;
+            }
+        }
+        return false;
     }
 }

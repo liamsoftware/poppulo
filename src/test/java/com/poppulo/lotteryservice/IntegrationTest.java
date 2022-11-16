@@ -48,10 +48,9 @@ public class IntegrationTest {
         updatedTickets.stream().forEach(ticket -> assertEquals(2, ticket.getLines().size()));
     }
 
-    @Test
+    @Test(expected = TicketNotFoundException.class)
     public void amendNonExistingTicket() {
-        Ticket t = restService.amendTicket(100L, 50);
-        assertNull(t);
+        restService.amendTicket(100L, 50);
     }
 
     @Test
@@ -64,10 +63,9 @@ public class IntegrationTest {
         });
     }
 
-    @Test
+    @Test(expected = TicketNotFoundException.class)
     public void getTicketStatusOfNonExistingTicketTest() {
-        String status = restService.getTicketStatus(100L);
-        assertNull(status);
+        restService.getTicketStatus(100L);
     }
 
 }

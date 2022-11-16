@@ -83,7 +83,7 @@ public class RestService {
     public String getTicketStatus(@PathVariable long id) {
         Ticket ticketToValidate = ticketCache.getTicket(id);
         if (ticketToValidate != null) {
-            String ticketStatus = rulePolicy.getResult(ticketToValidate);
+            String ticketStatus = rulePolicy.computeResult(ticketToValidate);
             log.info("getTicketStatus: id: {}, status: {}", id, ticketStatus);
             return ticketStatus;
         }
@@ -91,5 +91,5 @@ public class RestService {
     }
 
     //allow for checking a ticket status by passing the ticket into the request.
-    //alow for creating a ticket with an id as a param, then you'll have to check the cache for existence...
+    //allow for creating a ticket with an id as a param, then you'll have to check the cache for existence...
 }

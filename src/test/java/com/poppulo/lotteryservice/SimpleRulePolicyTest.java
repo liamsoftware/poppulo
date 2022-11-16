@@ -31,7 +31,7 @@ public class SimpleRulePolicyTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = simpleRulePolicy.getResult(ticket);
+        String r = simpleRulePolicy.computeResult(ticket);
         assertEquals("10", r);
     }
 
@@ -42,7 +42,7 @@ public class SimpleRulePolicyTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = simpleRulePolicy.getResult(ticket);
+        String r = simpleRulePolicy.computeResult(ticket);
         assertEquals("5", r);
     }
 
@@ -53,7 +53,7 @@ public class SimpleRulePolicyTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = simpleRulePolicy.getResult(ticket);
+        String r = simpleRulePolicy.computeResult(ticket);
         assertEquals("1", r);
     }
 
@@ -64,7 +64,7 @@ public class SimpleRulePolicyTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = simpleRulePolicy.getResult(ticket);
+        String r = simpleRulePolicy.computeResult(ticket);
         assertEquals("0", r);
     }
 
