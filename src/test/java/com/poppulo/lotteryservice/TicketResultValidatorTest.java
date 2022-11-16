@@ -8,19 +8,19 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 
-public class TicketResultCheckerTest {
+public class TicketResultValidatorTest {
 
-    public TicketResultChecker ticketResultChecker;
+    public TicketResultValidator ticketResultValidator;
     @Mock
     private Ticket ticket;
 
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        this.ticketResultChecker = new TicketResultChecker();
+        this.ticketResultValidator = new TicketResultValidator();
     }
 
     @Test
@@ -31,8 +31,8 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultChecker.getResult(ticket);
-        assertTrue(r.equals("10"));
+        String r = ticketResultValidator.getResult(ticket);
+        assertEquals("10", r);
     }
 
     @Test
@@ -42,8 +42,8 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultChecker.getResult(ticket);
-        assertTrue(r.equals("5"));
+        String r = ticketResultValidator.getResult(ticket);
+        assertEquals("5", r);
     }
 
     @Test
@@ -53,8 +53,8 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultChecker.getResult(ticket);
-        assertTrue(r.equals("1"));
+        String r = ticketResultValidator.getResult(ticket);
+        assertEquals("1", r);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class TicketResultCheckerTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultChecker.getResult(ticket);
-        assertTrue(r.equals("0"));
+        String r = ticketResultValidator.getResult(ticket);
+        assertEquals("0", r);
     }
 
 }

@@ -5,11 +5,11 @@ import java.util.Random;
 public class TicketGenerator {
 
     //if the id is not in the cache, then create new ticket with x lines
-    private ExistingTickets existingTickets;
+    private TicketCache ticketCache;
     private Random random = new Random();
 
-    public TicketGenerator(ExistingTickets existingTickets) {
-        this.existingTickets = existingTickets;
+    public TicketGenerator(TicketCache ticketCache) {
+        this.ticketCache = ticketCache;
     }
 
     public Ticket generateTicket(long id, int numberOfLines) {
@@ -24,8 +24,16 @@ public class TicketGenerator {
         return null;
     }
 
+    public Ticket amendTicket(Ticket ticket, int numberOfExtraLines) {
+        while (numberOfExtraLines > 0) {
+            ticket.addLine(generateRandomLine());
+            numberOfExtraLines--;
+        }
+        return ticket;
+    }
+
     private boolean doesTicketAlreadyExist(long id) {
-        return existingTickets.doesExist(id);
+        return ticketCache.doesExist(id);
     }
 
     private Integer[] generateRandomLine() {

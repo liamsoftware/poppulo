@@ -12,6 +12,10 @@ public class Ticket {
         this.uniqueId = uniqueId;
     }
 
+    public Ticket() {
+
+    }
+
     public boolean generateTicket(int numberOfLines) {
         return false;
     }
@@ -34,5 +38,10 @@ public class Ticket {
 
     public int getNumberOfLines() {
         return lines.size();
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + getUniqueId() + ", numLines: " + getNumberOfLines();
     }
 }

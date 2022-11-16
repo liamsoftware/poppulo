@@ -5,8 +5,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -18,17 +16,17 @@ public class TicketGeneratorTest {
     private TicketGenerator ticketGenerator;
 
     @Mock
-    private ExistingTickets existingTickets;
+    private TicketCache ticketCache;
 
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        this.ticketGenerator = new TicketGenerator(existingTickets);
+        this.ticketGenerator = new TicketGenerator(ticketCache);
     }
 
     @Test
     public void generateTicketWithNewIdTest() {
-        given(existingTickets.doesExist(anyLong())).willReturn(false);
+        given(ticketCache.doesExist(anyLong())).willReturn(false);
 
         Ticket newTicket = ticketGenerator.generateTicket(1L, 5);
         assertTrue(newTicket.getNumberOfLines() == 5);
@@ -36,7 +34,7 @@ public class TicketGeneratorTest {
 
     @Test
     public void generateTicketLinesExistWithValidNumbers() {
-        given(existingTickets.doesExist(anyLong())).willReturn(false);
+        given(ticketCache.doesExist(anyLong())).willReturn(false);
 
         Ticket newTicket = ticketGenerator.generateTicket(1L, 50);
         List<Integer[]> lines = newTicket.getLines();
