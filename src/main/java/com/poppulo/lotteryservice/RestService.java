@@ -95,7 +95,7 @@ public class RestService {
             log.info("getTicketStatus: ticket to check: [{}]", ticket);
             return rulePolicy.computeResult(ticket);
         }
-        throw new RuntimeException("Invalid ticket format");
+        throw new InvalidTicketException();
     }
 
     //allow for creating a ticket with an id as a param, then you'll have to check the cache for existence...
