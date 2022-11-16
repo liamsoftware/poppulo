@@ -17,10 +17,10 @@ public class SimpleRulePolicy implements RulePolicy {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    //if a line contains a sum of 2, then result for ticket is 10
-    //else if a line contains all same nums, then result for ticket is 5
-    //else if second and third nums are diff from first, then result for ticket is 1
-    //otherwise result is 1.
+    private static final String TICKET_CONTAINS_SUM_OF_TWO = "10";
+    private static final String TICKER_CONTAINS_SINGLE_MATCHING_VALUE = "5";
+    private static final String TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST = "1";
+    private static final String NOT_A_WINNING_TICKET = "0";
 
     //get the big o notation for these - worse case analysis
 
@@ -28,10 +28,11 @@ public class SimpleRulePolicy implements RulePolicy {
         List<Integer[]> lines = ticket.getLines();
         log.info("computeResult: computing ticket id: {} with {} number of lines.", ticket.getUniqueId(),
                 ticket.getNumberOfLines());
-        if (isAnyLineASumOfTwo(lines)) return "10";
-        else if (doesAnyLineContainASingleValue(lines)) return "5";
-        else if (doesAnyLineContainDifferingThirdAndFourthValuesFromTheFirst(lines)) return "1";
-        return "0";
+
+        if (isAnyLineASumOfTwo(lines)) return TICKET_CONTAINS_SUM_OF_TWO;
+        if (doesAnyLineContainASingleValue(lines)) return TICKER_CONTAINS_SINGLE_MATCHING_VALUE;
+        if (doesAnyLineContainDifferingThirdAndFourthValuesFromTheFirst(lines)) return TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST;
+        return NOT_A_WINNING_TICKET;
     }
 
     private boolean isAnyLineASumOfTwo(List<Integer[]> lines) {
