@@ -13,12 +13,12 @@ public class RestService {
 
     TicketCache ticketCache = new TicketCache();
     RandomTicketGenerator randomTicketGenerator = new RandomTicketGenerator();
-    TicketResultValidator ticketResultValidator = new TicketResultValidator();
+    SimpleRulePolicy simpleRulePolicy = new SimpleRulePolicy();
 
-    public RestService(TicketCache ticketCache, RandomTicketGenerator randomTicketGenerator, TicketResultValidator ticketResultValidator) {
+    public RestService(TicketCache ticketCache, RandomTicketGenerator randomTicketGenerator, SimpleRulePolicy simpleRulePolicy) {
         this.ticketCache = ticketCache;
         this.randomTicketGenerator = randomTicketGenerator;
-        this.ticketResultValidator = ticketResultValidator;
+        this.simpleRulePolicy = simpleRulePolicy;
     }
 
     public RestService() {
@@ -73,7 +73,7 @@ public class RestService {
     public String getTicketStatus(@PathVariable long id) {
         Ticket ticketToValidate = ticketCache.getTicket(id);
         if (ticketToValidate != null) {
-            String ticketStatus = ticketResultValidator.getResult(ticketToValidate);
+            String ticketStatus = simpleRulePolicy.getResult(ticketToValidate);
             log.info("getTicketStatus: id: {}, status: {}", id, ticketStatus);
             return ticketStatus;
         }

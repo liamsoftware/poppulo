@@ -11,16 +11,16 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 
-public class TicketResultValidatorTest {
+public class SimpleRulePolicyTest {
 
-    public TicketResultValidator ticketResultValidator;
+    public SimpleRulePolicy simpleRulePolicy;
     @Mock
     private Ticket ticket;
 
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        this.ticketResultValidator = new TicketResultValidator();
+        this.simpleRulePolicy = new SimpleRulePolicy();
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TicketResultValidatorTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultValidator.getResult(ticket);
+        String r = simpleRulePolicy.getResult(ticket);
         assertEquals("10", r);
     }
 
@@ -42,7 +42,7 @@ public class TicketResultValidatorTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultValidator.getResult(ticket);
+        String r = simpleRulePolicy.getResult(ticket);
         assertEquals("5", r);
     }
 
@@ -53,7 +53,7 @@ public class TicketResultValidatorTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultValidator.getResult(ticket);
+        String r = simpleRulePolicy.getResult(ticket);
         assertEquals("1", r);
     }
 
@@ -64,7 +64,7 @@ public class TicketResultValidatorTest {
         list.add(arr);
         given(ticket.getLines()).willReturn(list);
 
-        String r = ticketResultValidator.getResult(ticket);
+        String r = simpleRulePolicy.getResult(ticket);
         assertEquals("0", r);
     }
 

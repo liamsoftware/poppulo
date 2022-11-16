@@ -13,7 +13,7 @@ import java.util.List;
  * Score 1 if second and third values are different from the first.
  * Score 0 otherwise.
  */
-public class TicketResultValidator {
+public class SimpleRulePolicy {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 

@@ -23,13 +23,13 @@ public class RestServiceTest {
     @Mock
     private RandomTicketGenerator randomTicketGenerator;
     @Mock
-    private TicketResultValidator ticketResultValidator;
+    private SimpleRulePolicy simpleRulePolicy;
 
 
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        restService = new RestService(ticketCache, randomTicketGenerator, ticketResultValidator);
+        restService = new RestService(ticketCache, randomTicketGenerator, simpleRulePolicy);
         tickets.add(ticket);
     }
 
@@ -75,7 +75,7 @@ public class RestServiceTest {
     @Test
     public void getTicketStatusTest() {
         given(ticketCache.getTicket(anyLong())).willReturn(ticket);
-        given(ticketResultValidator.getResult(any(Ticket.class))).willReturn("10");
+        given(simpleRulePolicy.getResult(any(Ticket.class))).willReturn("10");
         String result = restService.getTicketStatus(3L);
         assertEquals("10", result);
     }

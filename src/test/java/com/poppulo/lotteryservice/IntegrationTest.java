@@ -11,7 +11,7 @@ public class IntegrationTest {
 
     private TicketCache ticketCache;
     private RandomTicketGenerator randomTicketGenerator;
-    private TicketResultValidator ticketResultValidator;
+    private SimpleRulePolicy simpleRulePolicy;
 
     private RestService restService;
 
@@ -19,8 +19,8 @@ public class IntegrationTest {
     public void setup() {
         ticketCache = new TicketCache();
         randomTicketGenerator = new RandomTicketGenerator();
-        ticketResultValidator = new TicketResultValidator();
-        restService = new RestService(ticketCache, randomTicketGenerator, ticketResultValidator);
+        simpleRulePolicy = new SimpleRulePolicy();
+        restService = new RestService(ticketCache, randomTicketGenerator, simpleRulePolicy);
     }
 
     @Test
