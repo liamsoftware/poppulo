@@ -60,6 +60,10 @@ public class RestService {
             throw new TicketNotFoundException(id);
         }
 
+        if (ticketToAmend.isResultChecked()) {
+            throw new IllegalTicketAmendException(ticketToAmend);
+        }
+
         if (numberOfAdditionalLines <= 0) {
             log.info("amendTicket: cannot amend {} number of lines on a ticket.", numberOfAdditionalLines);
             return ticketToAmend;

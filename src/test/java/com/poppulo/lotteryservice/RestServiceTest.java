@@ -75,6 +75,14 @@ public class RestServiceTest {
         assertEquals(0, amendedTicket.getNumberOfLines());
     }
 
+    @Test(expected = IllegalTicketAmendException.class)
+    public void amendTicketAlreadyCheckedTest() {
+        Ticket t = new Ticket(1L);
+        t.setChecked();
+        given(ticketCache.getTicket(1L)).willReturn(t);
+        restService.amendTicket(1L, -1);
+    }
+
     @Test
     public void getTicketStatusTest() {
         given(ticketCache.getTicket(anyLong())).willReturn(ticketMock);

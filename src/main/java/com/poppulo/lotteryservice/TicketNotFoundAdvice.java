@@ -12,7 +12,7 @@ public class TicketNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(TicketNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String ticketNotFoundExceptionHandler(TicketNotFoundException e) {
+    public String ticketNotFoundExceptionHandler(TicketNotFoundException e) {
         return e.getMessage();
     }
 }
