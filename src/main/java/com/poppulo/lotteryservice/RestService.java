@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//should this be split out into put, post, get classes?
-
 @RestController
 public class RestService {
 
@@ -97,6 +95,4 @@ public class RestService {
         }
         throw new InvalidTicketException();
     }
-
-    //allow for creating a ticket with an id as a param, then you'll have to check the cache for existence...
 }
