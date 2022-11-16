@@ -57,9 +57,8 @@ public class TicketCache {
 
     public Ticket getTicket(long id) {
         if (!tickets.containsKey(id)) {
-            log.warn("getTicket: ticket id: {} does not exist in the cache.", id);
+            log.info("getTicket: ticket id: {} does not exist in the cache.", id);
         }
-        Ticket ticket = tickets.get(id);
-        return ticket;
+        return tickets.get(id);
     }
 }

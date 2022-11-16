@@ -40,8 +40,11 @@ public class RestService {
     @GetMapping(value = "/ticket/{id}")
     public Ticket getTicket(@PathVariable long id) {
         log.info("get ticket by id. id: {}", id);
-        //validate input... and get ticket...
-        return new Ticket();
+        Ticket ticket = ticketCache.getTicket(id);
+        if (ticket != null) {
+            return ticket;
+        }
+        throw new TicketNotFoundException(id);
     }
 
     @GetMapping(value = "/ticket")
