@@ -34,11 +34,17 @@ public class SimpleRulePolicy implements RulePolicy {
         log.info("computeResult: computing ticket id: {} with {} number of lines.", ticket.getUniqueId(),
                 ticket.getNumberOfLines());
 
-        for (Integer[] aLine : lines) {
+
+        lines.forEach(aLine -> {
             int score = checkResult(aLine);
             Result r = new Result(score, Arrays.toString(aLine));
             ticket.addResult(r);
-        }
+        });
+//        for (Integer[] aLine : lines) {
+//            int score = checkResult(aLine);
+//            Result r = new Result(score, Arrays.toString(aLine));
+//            ticket.addResult(r);
+//        }
 
         ticket.sortResults();
         ticket.setChecked();
