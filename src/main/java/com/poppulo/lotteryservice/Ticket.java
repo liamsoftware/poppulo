@@ -1,6 +1,10 @@
 package com.poppulo.lotteryservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,8 +13,12 @@ import java.util.List;
  */
 public class Ticket {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     private long uniqueId;
     private List<Integer[]> lines = new ArrayList<>();
+    private boolean resultChecked = false;
+    private List<String> results =  new ArrayList<>();
 
     public Ticket(long uniqueId) {
         this.uniqueId = uniqueId;
@@ -35,11 +43,30 @@ public class Ticket {
         return lines.size();
     }
 
+    public void setChecked() {
+        resultChecked = true;
+    }
+
+    public boolean isResultChecked() {
+        return resultChecked; //check in case pass by reference or pass by value.
+    }
+
+    public void addLineResult(String score, String line) {
+        results.add("Result: " + score + ". Line: " + line);
+    }
+
+    public List<String> getResults() {
+        return results;
+    }
+
+    public void sortResults() {
+        System.out.println("sorting");
+        Collections.sort(results, Collections.reverseOrder());
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("id: ").append(getUniqueId())
-                .append(" number of lines: ").append(getNumberOfLines());
-        return sb.toString();
+        return "id: " + getUniqueId() + " number of lines: " + getNumberOfLines() +
+                ". isResultChecked: " + isResultChecked();
     }
 }

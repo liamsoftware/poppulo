@@ -77,22 +77,13 @@ public class RestService {
     }
 
     @GetMapping(value = "/status/{id}")
-    public String getTicketStatus(@PathVariable long id) {
+    public Ticket getTicketStatus(@PathVariable long id) {
         Ticket ticketToValidate = ticketCache.getTicket(id);
         if (ticketToValidate != null) {
-            String ticketStatus = rulePolicy.computeResult(ticketToValidate);
-            log.info("getTicketStatus: id: {}, status: {}", id, ticketStatus);
-            return ticketStatus;
+            Ticket ticket = rulePolicy.computeResult(ticketToValidate);
+            log.info("getTicketStatus: id: {}, status: {}", id, ticket);
+            return ticket;
         }
         throw new TicketNotFoundException(id);
-    }
-
-    @PostMapping(value = "/status")
-    public String getTicketStatus(@RequestBody Ticket ticket) {
-        if (TicketCheckHelper.isValidFormat(ticket)) {
-            log.info("getTicketStatus: ticket to check: [{}]", ticket);
-            return rulePolicy.computeResult(ticket);
-        }
-        throw new InvalidTicketException();
     }
 }

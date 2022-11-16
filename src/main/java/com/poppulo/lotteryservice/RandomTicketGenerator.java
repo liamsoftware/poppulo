@@ -32,9 +32,14 @@ public class RandomTicketGenerator implements TicketGenerator {
 
     @Override
     public Ticket amend(Ticket ticket, int numberOfExtraLines) {
-        log.info("amend: amending ticket with id {} and {} additional line(s).", ticket.getUniqueId(),
-                numberOfExtraLines);
-        return addLines(ticket, numberOfExtraLines);
+        if (!ticket.isResultChecked()) {
+            log.info("amend: amending ticket with id {} and {} additional line(s).", ticket.getUniqueId(),
+                    numberOfExtraLines);
+            return addLines(ticket, numberOfExtraLines);
+        }
+        //should do more than just log that we cannot amend the ticket....
+        log.info("amend: cannot amend a ticket that has been checked.");
+        return ticket;
     }
 
     private Ticket addLines(Ticket ticket, int numberOfLines) {

@@ -2,7 +2,7 @@ package com.poppulo.lotteryservice;
 
 import java.util.List;
 
-public class TicketCheckHelper {
+public class TicketFormatHelper {
 
     public static boolean isValidFormat(Ticket ticket) {
         List<Integer[]> lines = ticket.getLines();

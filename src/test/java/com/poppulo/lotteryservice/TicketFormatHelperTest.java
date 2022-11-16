@@ -12,7 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 
-public class TicketCheckHelperTest {
+public class TicketFormatHelperTest {
 
     @Mock
     private Ticket ticket;
@@ -31,7 +31,7 @@ public class TicketCheckHelperTest {
         aLine[2] = 2;
         lines.add(aLine);
         given(ticket.getLines()).willReturn(lines);
-        boolean actual = TicketCheckHelper.isValidFormat(ticket);
+        boolean actual = TicketFormatHelper.isValidFormat(ticket);
         assertTrue(actual);
     }
 
@@ -45,7 +45,7 @@ public class TicketCheckHelperTest {
         aLine[3] = 1;
         lines.add(aLine);
         given(ticket.getLines()).willReturn(lines);
-        boolean actual = TicketCheckHelper.isValidFormat(ticket);
+        boolean actual = TicketFormatHelper.isValidFormat(ticket);
         assertFalse(actual);
     }
 
@@ -57,7 +57,7 @@ public class TicketCheckHelperTest {
         aLine[1] = 1;
         lines.add(aLine);
         given(ticket.getLines()).willReturn(lines);
-        boolean actual = TicketCheckHelper.isValidFormat(ticket);
+        boolean actual = TicketFormatHelper.isValidFormat(ticket);
         assertFalse(actual);
     }
 
@@ -70,7 +70,7 @@ public class TicketCheckHelperTest {
         aLine[2] = 3;
         lines.add(aLine);
         given(ticket.getLines()).willReturn(lines);
-        boolean actual = TicketCheckHelper.isValidFormat(ticket);
+        boolean actual = TicketFormatHelper.isValidFormat(ticket);
         assertFalse(actual);
     }
 
@@ -83,7 +83,7 @@ public class TicketCheckHelperTest {
         aLine[2] = 3;
         lines.add(aLine);
         given(ticket.getLines()).willReturn(lines);
-        boolean actual = TicketCheckHelper.isValidFormat(ticket);
+        boolean actual = TicketFormatHelper.isValidFormat(ticket);
         assertFalse(actual);
     }
 }

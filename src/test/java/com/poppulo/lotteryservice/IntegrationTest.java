@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
+import java.util.List;
 
-import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKET_CONTAINS_SUM_OF_TWO;
 import static org.junit.Assert.*;
 
 public class IntegrationTest {
@@ -56,11 +56,12 @@ public class IntegrationTest {
 
     @Test
     public void getTicketStatusOfExistingTicketTest() {
-        restService.createTicket();
-        Collection<Ticket> tickets = restService.getAllTickets();
+        Ticket aTicket = restService.createTicket();
+        restService.amendTicket(aTicket.getUniqueId(),2);
+        List<Ticket> tickets = restService.getAllTickets();
         tickets.stream().forEach(ticket -> {
-            String status = restService.getTicketStatus(ticket.getUniqueId());
-            assertFalse(status.isBlank());
+            Ticket ticketResult = restService.getTicketStatus(ticket.getUniqueId());
+            assertEquals(2, ticketResult.getResults().size());
         });
     }
 
@@ -68,27 +69,4 @@ public class IntegrationTest {
     public void getTicketStatusOfNonExistingTicketTest() {
         restService.getTicketStatus(100L);
     }
-
-    @Test
-    public void getTicketStatusInjectedTicketTest() {
-        Integer[] line = new Integer[3];
-        line[0] = 1;
-        line[1] = 0;
-        line[2] = 1;
-        Ticket ticket = new Ticket(1L);
-        ticket.addLine(line);
-        String result = restService.getTicketStatus(ticket);
-        assertEquals(TICKET_CONTAINS_SUM_OF_TWO, result);
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void getTicketStatusInjectedInvalidTicketTest() {
-        Integer[] line = new Integer[2];
-        line[0] = 1;
-        line[2] = 1;
-        Ticket ticket = new Ticket(1L);
-        ticket.addLine(line);
-        restService.getTicketStatus(ticket);
-    }
-
 }

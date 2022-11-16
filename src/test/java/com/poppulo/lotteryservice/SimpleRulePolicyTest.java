@@ -5,11 +5,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class SimpleRulePolicyTest {
 
@@ -24,47 +24,49 @@ public class SimpleRulePolicyTest {
     }
 
     @Test
-    public void getResultTenTest() {
-        List<Integer[]> list = new ArrayList<>();
-        Integer[] arr = {0, 1, 1};
-        list.add(arr);
-        given(ticket.getLines()).willReturn(list);
+    public void setTicketCheckFlagWhenNotCheckedTest() {
+        given(ticket.isResultChecked()).willReturn(false);
+        simpleRulePolicy.computeResult(ticket);
+        verify(ticket, times(1)).setChecked();
+    }
 
-        String r = simpleRulePolicy.computeResult(ticket);
-        assertEquals("10", r);
+    @Test
+    public void getResultTenTest() {
+        Ticket ticket = new Ticket(1L);
+        Integer[] arr = {0, 1, 1};
+        ticket.addLine(arr);
+        Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
+        String resultString = resultTicket.getResults().get(0);
+        assertTrue(resultString.contains("Result: 10."));
     }
 
     @Test
     public void getResultFiveTest() {
-        List<Integer[]> list = new ArrayList<>();
+        Ticket ticket = new Ticket(1L);
         Integer[] arr = {0, 0, 0};
-        list.add(arr);
-        given(ticket.getLines()).willReturn(list);
-
-        String r = simpleRulePolicy.computeResult(ticket);
-        assertEquals("5", r);
+        ticket.addLine(arr);
+        Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
+        String resultString = resultTicket.getResults().get(0);
+        assertTrue(resultString.contains("Result: 5."));
     }
 
     @Test
     public void getResultOneTest() {
-        List<Integer[]> list = new ArrayList<>();
+        Ticket ticket = new Ticket(1L);
         Integer[] arr = {0, 1, 2};
-        list.add(arr);
-        given(ticket.getLines()).willReturn(list);
-
-        String r = simpleRulePolicy.computeResult(ticket);
-        assertEquals("1", r);
+        ticket.addLine(arr);
+        Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
+        String resultString = resultTicket.getResults().get(0);
+        assertTrue(resultString.contains("Result: 1."));
     }
 
     @Test
     public void getResultZeroTest() {
-        List<Integer[]> list = new ArrayList<>();
-        Integer[] arr = {2, 1, 2};
-        list.add(arr);
-        given(ticket.getLines()).willReturn(list);
-
-        String r = simpleRulePolicy.computeResult(ticket);
-        assertEquals("0", r);
+        Ticket ticket = new Ticket(1L);
+        Integer[] arr = {1, 2, 1};
+        ticket.addLine(arr);
+        Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
+        String resultString = resultTicket.getResults().get(0);
+        assertTrue(resultString.contains("Result: 0."));
     }
-
 }

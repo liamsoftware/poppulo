@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -41,5 +42,20 @@ public class RandomTicketGeneratorTest {
                 assertTrue(i == 0 || i == 1 || i ==2);
             }
         }
+    }
+
+    @Test
+    public void amendUncheckedTicketTest() {
+        Ticket aTicketToAmend = new Ticket(1L);
+        Ticket newTicket = randomTicketGenerator.amend(aTicketToAmend, 5);
+        assertEquals(5, newTicket.getNumberOfLines());
+    }
+
+    @Test
+    public void amendCheckedTicketTest() {
+        Ticket aTicketToAmend = new Ticket(1L);
+        aTicketToAmend.setChecked();
+        Ticket newTicket = randomTicketGenerator.amend(aTicketToAmend, 5);
+        assertEquals(0, newTicket.getNumberOfLines());
     }
 }
