@@ -15,7 +15,14 @@ public class TicketCache {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private final Map<Long, Ticket> tickets = new HashMap<>();
+    private Map<Long, Ticket> tickets = new HashMap<>();
+
+    public TicketCache() {
+    }
+
+    public TicketCache(Map<Long, Ticket> tickets) {
+        this.tickets = tickets;
+    }
 
     public boolean addTicket(Ticket ticket) {
         if (!tickets.containsKey(ticket.getUniqueId())) {
@@ -45,14 +52,8 @@ public class TicketCache {
     }
 
     public void updateTicket(long id, Ticket updatedTicket) {
-        if (tickets.containsKey(id)) {
-            Ticket currentTicket = tickets.get(id);
-            log.info("updateTicket: updating ticket from [{}], to [{}]", currentTicket, updatedTicket);
-            tickets.put(id, updatedTicket);
-        } else {
-            log.warn("updatedTicket: ticket: [{}] does not exist in the cache.", updatedTicket);
-//            throw new RuntimeException();
-        }
+        log.info("updateTicket: updating id: {} with ticket [{}].", id, updatedTicket);
+        tickets.computeIfPresent(id, (k, v) -> tickets.put(k, updatedTicket));
     }
 
     public Ticket getTicket(long id) {
