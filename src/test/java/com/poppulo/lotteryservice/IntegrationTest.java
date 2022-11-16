@@ -84,4 +84,14 @@ public class IntegrationTest {
         assertEquals(TICKET_CONTAINS_SUM_OF_TWO, result);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void getTicketStatusInjectedInvalidTicketTest() {
+        Integer[] line = new Integer[2];
+        line[0] = 1;
+        line[2] = 1;
+        Ticket ticket = new Ticket(1L);
+        ticket.addLine(line);
+        restService.getTicketStatus(ticket);
+    }
+
 }
