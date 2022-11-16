@@ -14,12 +14,13 @@ Brief Class Description/Design:
 - RulePolicy: interface that allows ticket line results to be checked.
 - SimpleRulePolicy: implements RulePolicy. Calculates the result for each line on a ticket and adds that result to the ticket.
 - Result: stores the result for a line. Implements the Comparator interface to allow ordering.
-- IllegalTicketAmendException: used if a client tries to update a ticket that has already been checked.
-- TicketNotFoundException: used if a client tries to check or update a ticket that is not in the cache.
+- IllegalTicketAmendException: thrown if a client tries to update a ticket that has already been checked.
+- TicketNotFoundException: thrown if a client tries to check or update a ticket that is not in the cache.
 
 Technology Used:
 - Spring boot
 - Spring web
+- Maven
 - Junit
 - Mockito
 - Logback
