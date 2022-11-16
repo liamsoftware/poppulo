@@ -3,9 +3,13 @@ package com.poppulo.lotteryservice;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKET_CONTAINS_SUM_OF_TWO;
 import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.given;
 
 public class IntegrationTest {
 
@@ -66,6 +70,18 @@ public class IntegrationTest {
     @Test(expected = TicketNotFoundException.class)
     public void getTicketStatusOfNonExistingTicketTest() {
         restService.getTicketStatus(100L);
+    }
+
+    @Test
+    public void getTicketStatusInjectedTicketTest() {
+        Integer[] line = new Integer[3];
+        line[0] = 1;
+        line[1] = 0;
+        line[2] = 1;
+        Ticket ticket = new Ticket(1L);
+        ticket.addLine(line);
+        String result = restService.getTicketStatus(ticket);
+        assertEquals(TICKET_CONTAINS_SUM_OF_TWO, result);
     }
 
 }

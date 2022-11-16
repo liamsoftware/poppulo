@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKER_CONTAINS_SINGLE_MATCHING_VALUE;
+import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKET_CONTAINS_SUM_OF_TWO;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
@@ -24,6 +26,8 @@ public class RestServiceTest {
     private RandomTicketGenerator randomTicketGenerator;
     @Mock
     private SimpleRulePolicy simpleRulePolicy;
+    @Mock
+    private Ticket ticketMock;
 
 
     @Before
@@ -76,8 +80,34 @@ public class RestServiceTest {
     @Test
     public void getTicketStatusTest() {
         given(ticketCache.getTicket(anyLong())).willReturn(ticket);
-        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn("10");
+        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn(TICKET_CONTAINS_SUM_OF_TWO);
         String result = restService.getTicketStatus(3L);
-        assertEquals("10", result);
+        assertEquals(TICKET_CONTAINS_SUM_OF_TWO, result);
+    }
+
+    @Test
+    public void getTicketTest() {
+        given(ticketCache.getTicket(anyLong())).willReturn(ticket);
+        Ticket returnedTicket = restService.getTicket(1L);
+        assertEquals(ticket, returnedTicket);
+    }
+
+    @Test(expected = TicketNotFoundException.class)
+    public void getTicketThatDoesNotExistTest() {
+        restService.getTicket(1L);
+    }
+
+    @Test
+    public void getTicketStatusInjectedTicketTest() {
+        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn(TICKER_CONTAINS_SINGLE_MATCHING_VALUE);
+        List<Integer[]> lines = new ArrayList<>();
+        Integer[] l = new Integer[3];
+        l[0] = 0;
+        l[1] = 0;
+        l[2] = 0;
+        lines.add(l);
+        given(ticketMock.getLines()).willReturn(lines);
+        String result = restService.getTicketStatus(ticketMock);
+        assertEquals(TICKER_CONTAINS_SINGLE_MATCHING_VALUE, result);
     }
 }

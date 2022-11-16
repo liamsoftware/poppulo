@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 //should this be split out into put, post, get classes?
@@ -63,7 +62,7 @@ public class RestService {
             throw new TicketNotFoundException(id);
         }
 
-        if (numberOfAdditionalLines <=0) {
+        if (numberOfAdditionalLines <= 0) {
             log.info("amendTicket: cannot amend {} number of lines on a ticket.", numberOfAdditionalLines);
             return ticketToAmend;
         }
@@ -90,6 +89,14 @@ public class RestService {
         throw new TicketNotFoundException(id);
     }
 
-    //allow for checking a ticket status by passing the ticket into the request.
+    @PostMapping(value = "/status")
+    public String getTicketStatus(@RequestBody Ticket ticket) {
+        if (TicketCheckHelper.isValidFormat(ticket)) {
+            log.info("getTicketStatus: ticket to check: [{}]", ticket);
+            return rulePolicy.computeResult(ticket);
+        }
+        throw new RuntimeException("Invalid ticket format");
+    }
+
     //allow for creating a ticket with an id as a param, then you'll have to check the cache for existence...
 }
