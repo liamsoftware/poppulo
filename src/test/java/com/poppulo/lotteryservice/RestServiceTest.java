@@ -102,4 +102,10 @@ public class RestServiceTest {
     public void getTicketThatDoesNotExistTest() {
         restService.getTicket(1L);
     }
+
+    @Test
+    public void ctorTest() {
+        RestService anotherRestService = new RestService();
+        assertNotNull(anotherRestService);
+    }
 }
