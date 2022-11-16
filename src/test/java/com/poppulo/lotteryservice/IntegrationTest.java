@@ -3,13 +3,10 @@ package com.poppulo.lotteryservice;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKET_CONTAINS_SUM_OF_TWO;
 import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.given;
 
 public class IntegrationTest {
 
