@@ -2,10 +2,7 @@ package com.poppulo.lotteryservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -15,22 +12,22 @@ public class RestService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     TicketCache ticketCache = new TicketCache();
-    TicketGenerator ticketGenerator = new TicketGenerator(ticketCache);
+    RandomTicketGenerator randomTicketGenerator = new RandomTicketGenerator();
     TicketResultValidator ticketResultValidator = new TicketResultValidator();
 
-    public RestService(TicketCache ticketCache, TicketGenerator ticketGenerator, TicketResultValidator ticketResultValidator) {
+    public RestService(TicketCache ticketCache, RandomTicketGenerator randomTicketGenerator, TicketResultValidator ticketResultValidator) {
         this.ticketCache = ticketCache;
-        this.ticketGenerator = ticketGenerator;
+        this.randomTicketGenerator = randomTicketGenerator;
         this.ticketResultValidator = ticketResultValidator;
     }
 
     public RestService() {
     }
 
-    @PostMapping
+    @PostMapping(value = "/ticket")
     public Ticket createTicket() {
         long id = ticketCache.getNextId();
-        Ticket createdTicket = ticketGenerator.generateTicket(id, 0);
+        Ticket createdTicket = randomTicketGenerator.generate(id, 0);
         if (ticketCache.addTicket(createdTicket)) {
             log.info("createTicket: created with id: {}", id);
             return createdTicket;
@@ -38,8 +35,14 @@ public class RestService {
         return null;
     }
 
-    //return a list of tickets. (What if there are a lot of tickets??)
-    @GetMapping
+    @GetMapping(value = "/ticket/{id}")
+    public Ticket getTicket(@PathVariable long id) {
+        log.info("get ticket by id. id: {}", id);
+        //validate input... and get ticket...
+        return new Ticket();
+    }
+
+    @GetMapping(value = "/ticket")
     public Collection<Ticket> getAllTickets() {
         Collection<Ticket> allTickets = ticketCache.getAllTickets();
         if (allTickets != null) {
@@ -50,21 +53,14 @@ public class RestService {
         return null;
     }
 
-    //gets an individual ticket
-//    @GetMapping
-//    public Ticket amendTicket(long id) {
-//        return null;
-//    }
-
-    //amends a ticket, adding x additional lines
-    @PutMapping
-    public Ticket amendTicket(long id, int numberOfAdditionalLines) {
+    @PutMapping(value = "/ticket/{id}/{numberOfAdditionalLines}")
+    public Ticket amendTicket(@PathVariable long id, @PathVariable int numberOfAdditionalLines) {
         log.info("amendTicket: id:{} numLines:{}", id, numberOfAdditionalLines);
         if (numberOfAdditionalLines > 0) {
             Ticket ticketToAmend = ticketCache.getTicket(id);
             log.info("amendTicket: ticket to amend: {}", ticketToAmend);
             if (ticketToAmend != null) {
-                Ticket amendedTicked = ticketGenerator.amendTicket(ticketToAmend, numberOfAdditionalLines);
+                Ticket amendedTicked = randomTicketGenerator.amend(ticketToAmend, numberOfAdditionalLines);
                 ticketCache.updateTicket(id, amendedTicked);
                 log.info("amendTicket: amended ticket: {}", amendedTicked);
                 return amendedTicked;
@@ -73,9 +69,8 @@ public class RestService {
         return null;
     }
 
-    //retrieves the status of a ticket
-    @PutMapping
-    public String getTicketStatus(long id) {
+    @GetMapping(value = "/status/{id}")
+    public String getTicketStatus(@PathVariable long id) {
         Ticket ticketToValidate = ticketCache.getTicket(id);
         if (ticketToValidate != null) {
             String ticketStatus = ticketResultValidator.getResult(ticketToValidate);
@@ -84,4 +79,6 @@ public class RestService {
         }
         return null;
     }
+
+    //allow for checking a ticket status by passing the ticket into the request.
 }

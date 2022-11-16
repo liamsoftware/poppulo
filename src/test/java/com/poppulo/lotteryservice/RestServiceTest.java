@@ -21,7 +21,7 @@ public class RestServiceTest {
     @Mock
     private TicketCache ticketCache;
     @Mock
-    private TicketGenerator ticketGenerator;
+    private RandomTicketGenerator randomTicketGenerator;
     @Mock
     private TicketResultValidator ticketResultValidator;
 
@@ -29,14 +29,14 @@ public class RestServiceTest {
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        restService = new RestService(ticketCache, ticketGenerator, ticketResultValidator);
+        restService = new RestService(ticketCache, randomTicketGenerator, ticketResultValidator);
         tickets.add(ticket);
     }
 
     @Test
     public void createTicketTest() {
         given(ticketCache.getNextId()).willReturn(1L);
-        given(ticketGenerator.generateTicket(anyLong(), anyInt())).willReturn(ticket);
+        given(randomTicketGenerator.generate(anyLong(), anyInt())).willReturn(ticket);
         given(ticketCache.addTicket(ticket)).willReturn(true);
         Ticket createdTicket = restService.createTicket();
         assertEquals(ticket, createdTicket);
@@ -58,7 +58,7 @@ public class RestServiceTest {
         updatedTicket.addLine(new Integer[3]);
 
         given(ticketCache.getTicket(1L)).willReturn(t);
-        given(ticketGenerator.amendTicket(any(Ticket.class), anyInt())).willReturn(updatedTicket);
+        given(randomTicketGenerator.amend(any(Ticket.class), anyInt())).willReturn(updatedTicket);
 
         Ticket amendedTicket = restService.amendTicket(1L, 2);
 

@@ -5,6 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * Stores a cache of generated tickets.
+ *
+ * Provides ability to add tickets to the cache, get ticket by id from the cache, update a ticket in the cache,
+ * and to get a copy of all tickets in the cache.
+ */
 public class TicketCache {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());

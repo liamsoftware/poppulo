@@ -11,9 +11,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
-public class TicketGeneratorTest {
+public class RandomTicketGeneratorTest {
 
-    private TicketGenerator ticketGenerator;
+    private RandomTicketGenerator randomTicketGenerator;
 
     @Mock
     private TicketCache ticketCache;
@@ -21,14 +21,14 @@ public class TicketGeneratorTest {
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        this.ticketGenerator = new TicketGenerator(ticketCache);
+        this.randomTicketGenerator = new RandomTicketGenerator();
     }
 
     @Test
     public void generateTicketWithNewIdTest() {
         given(ticketCache.doesExist(anyLong())).willReturn(false);
 
-        Ticket newTicket = ticketGenerator.generateTicket(1L, 5);
+        Ticket newTicket = randomTicketGenerator.generate(1L, 5);
         assertTrue(newTicket.getNumberOfLines() == 5);
     }
 
@@ -36,7 +36,7 @@ public class TicketGeneratorTest {
     public void generateTicketLinesExistWithValidNumbers() {
         given(ticketCache.doesExist(anyLong())).willReturn(false);
 
-        Ticket newTicket = ticketGenerator.generateTicket(1L, 50);
+        Ticket newTicket = randomTicketGenerator.generate(1L, 50);
         List<Integer[]> lines = newTicket.getLines();
         for (Integer[] arr : lines) {
             for (int i : arr) {

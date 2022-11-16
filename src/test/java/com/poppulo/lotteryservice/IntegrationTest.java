@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class IntegrationTest {
 
     private TicketCache ticketCache;
-    private TicketGenerator ticketGenerator;
+    private RandomTicketGenerator randomTicketGenerator;
     private TicketResultValidator ticketResultValidator;
 
     private RestService restService;
@@ -18,9 +18,9 @@ public class IntegrationTest {
     @Before
     public void setup() {
         ticketCache = new TicketCache();
-        ticketGenerator = new TicketGenerator(ticketCache);
+        randomTicketGenerator = new RandomTicketGenerator();
         ticketResultValidator = new TicketResultValidator();
-        restService = new RestService(ticketCache, ticketGenerator, ticketResultValidator);
+        restService = new RestService(ticketCache, randomTicketGenerator, ticketResultValidator);
     }
 
     @Test

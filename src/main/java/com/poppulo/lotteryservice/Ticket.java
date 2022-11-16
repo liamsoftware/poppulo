@@ -3,6 +3,10 @@ package com.poppulo.lotteryservice;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a lottery ticket.
+ * Has unique ID and list of lines.
+ */
 public class Ticket {
 
     private long uniqueId;
@@ -13,15 +17,6 @@ public class Ticket {
     }
 
     public Ticket() {
-
-    }
-
-    public boolean generateTicket(int numberOfLines) {
-        return false;
-    }
-
-    public boolean addLines(int numberOfLinesToAdd) {
-        return false;
     }
 
     public List<Integer[]> getLines() {
@@ -42,6 +37,9 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "id: " + getUniqueId() + ", numLines: " + getNumberOfLines();
+        StringBuilder sb = new StringBuilder();
+        sb.append("id: ").append(getUniqueId())
+                .append(" number of lines: ").append(getNumberOfLines());
+        return sb.toString();
     }
 }
