@@ -48,7 +48,7 @@ public class RestServiceTest {
     public void getAllTicketsTest() {
         given(ticketCache.getAllTickets())
                 .willReturn(tickets);
-        Collection<Ticket> allTickets = restService.getAllTickets();
+        List<Ticket> allTickets = restService.getAllTickets();
         assertEquals(allTickets, tickets);
     }
 

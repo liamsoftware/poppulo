@@ -37,7 +37,6 @@ public class RandomTicketGenerator implements TicketGenerator {
                     numberOfExtraLines);
             return addLines(ticket, numberOfExtraLines);
         }
-        //should do more than just log that we cannot amend the ticket....
         log.info("amend: cannot amend a ticket that has been checked.");
         return ticket;
     }

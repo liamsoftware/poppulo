@@ -24,27 +24,20 @@ public class SimpleRulePolicy implements RulePolicy {
     public static final int NOT_A_WINNING_TICKET = 0;
 
     //get the big o notation for these - worse case analysis
-
     public Ticket computeResult(Ticket ticket) {
         if (ticket.isResultChecked()) {
-            return ticket;//need to do more than just return...
+            return ticket;
         }
 
         List<Integer[]> lines = ticket.getLines();
         log.info("computeResult: computing ticket id: {} with {} number of lines.", ticket.getUniqueId(),
                 ticket.getNumberOfLines());
 
-
         lines.forEach(aLine -> {
             int score = checkResult(aLine);
             Result r = new Result(score, Arrays.toString(aLine));
             ticket.addResult(r);
         });
-//        for (Integer[] aLine : lines) {
-//            int score = checkResult(aLine);
-//            Result r = new Result(score, Arrays.toString(aLine));
-//            ticket.addResult(r);
-//        }
 
         ticket.sortResults();
         ticket.setChecked();
@@ -52,10 +45,18 @@ public class SimpleRulePolicy implements RulePolicy {
     }
 
     private int checkResult(Integer[] aLine) {
-        if (isSumOfTwo(aLine)) return TICKET_CONTAINS_SUM_OF_TWO;
-        if (doesContainSingleValue(aLine)) return TICKET_CONTAINS_SINGLE_MATCHING_VALUE;
-        if (doesContainDifferingThirdAndFourthValuesFromTheFirst(aLine))
+        if (isSumOfTwo(aLine)) {
+            return TICKET_CONTAINS_SUM_OF_TWO;
+        }
+
+        if (doesContainSingleValue(aLine)) {
+            return TICKET_CONTAINS_SINGLE_MATCHING_VALUE;
+        }
+
+        if (doesContainDifferingThirdAndFourthValuesFromTheFirst(aLine)) {
             return (TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST);
+        }
+
         return NOT_A_WINNING_TICKET;
     }
 
@@ -72,31 +73,6 @@ public class SimpleRulePolicy implements RulePolicy {
     private boolean doesContainDifferingThirdAndFourthValuesFromTheFirst(Integer[] aLine) {
         if (!Objects.equals(aLine[1], aLine[2])) {
             return !Objects.equals(aLine[0], aLine[1]) && !Objects.equals(aLine[0], aLine[2]);
-        }
-        return false;
-    }
-
-    private boolean isAnyLineASumOfTwo(List<Integer[]> lines) {
-        for (Integer[] l : lines) {
-            long sum = Arrays.stream(l).mapToLong(num -> num).sum();
-            if (sum == 2) return true;
-        }
-        return false;
-    }
-
-    private boolean doesAnyLineContainASingleValue(List<Integer[]> lines) {
-        for (Integer[] l : lines) {
-            long count = Arrays.stream(l).distinct().count();
-            if (count == 1) return true;
-        }
-        return false;
-    }
-
-    private boolean doesAnyLineContainDifferingThirdAndFourthValuesFromTheFirst(List<Integer[]> lines) {
-        for (Integer[] l : lines) {
-            if (l[1] != l[2]) {
-                if (l[0] != l[1] && l[0] != l[2]) return true;
-            }
         }
         return false;
     }

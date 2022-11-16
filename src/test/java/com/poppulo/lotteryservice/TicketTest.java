@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class TicketTest {
 
     private Ticket ticket;
@@ -22,7 +24,6 @@ public class TicketTest {
         ticket.addResult(new Result(5, "[0,0,0]"));
         ticket.sortResults();
         List<Result> results = ticket.getResults();
-        results.forEach(r -> System.out.println(r));
-        //assertEquals(10, results.get(0).getScore());
+        assertEquals(10, results.get(0).getScore());
     }
 }

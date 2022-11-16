@@ -30,7 +30,7 @@ public class IntegrationTest {
     public void getAllTickets() {
         restService.createTicket();
         restService.createTicket();
-        Collection<Ticket> tickets = restService.getAllTickets();
+        List<Ticket> tickets = restService.getAllTickets();
         assertEquals(2, tickets.size());
     }
 
@@ -41,7 +41,7 @@ public class IntegrationTest {
         tickets.stream().forEach(ticket -> {
             restService.amendTicket(ticket.getUniqueId(), 2);
         });
-        Collection<Ticket> updatedTickets = restService.getAllTickets();
+        List<Ticket> updatedTickets = restService.getAllTickets();
         updatedTickets.stream().forEach(ticket -> assertEquals(2, ticket.getLines().size()));
     }
 
