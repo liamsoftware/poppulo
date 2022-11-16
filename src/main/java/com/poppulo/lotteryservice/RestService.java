@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 //should this be split out into put, post, get classes?
 
@@ -30,11 +31,9 @@ public class RestService {
     public Ticket createTicket() {
         long id = ticketCache.getNextId();
         Ticket createdTicket = ticketGenerator.generate(id, 0);
-        if (ticketCache.addTicket(createdTicket)) {
-            log.info("createTicket: created with id: {}", id);
-            return createdTicket;
-        }
-        return null;
+        ticketCache.addTicket(createdTicket);
+        log.info("createTicket: created new ticket: [{}]", id);
+        return createdTicket;
     }
 
     @GetMapping(value = "/ticket/{id}")
@@ -48,30 +47,36 @@ public class RestService {
     }
 
     @GetMapping(value = "/ticket")
-    public Collection<Ticket> getAllTickets() {
-        Collection<Ticket> allTickets = ticketCache.getAllTickets();
-        if (allTickets != null) {
-            log.info("getAllTickets: {} ticket(s) are stored.", allTickets.size());
-            return allTickets;
-        }
-        log.warn("getAllTickets: there are no tickets stored."); //clean this up, should return empty list...
-        return null;
+    public List<Ticket> getAllTickets() {
+        List<Ticket> allTickets = ticketCache.getAllTickets();
+        log.info("getAllTickets: {} ticket(s) are stored.", allTickets.size());
+        return allTickets;
     }
 
     @PutMapping(value = "/ticket/{id}/{numberOfAdditionalLines}")
     public Ticket amendTicket(@PathVariable long id, @PathVariable int numberOfAdditionalLines) {
         log.info("amendTicket: id:{} numLines:{}", id, numberOfAdditionalLines);
-        if (numberOfAdditionalLines > 0) {
-            Ticket ticketToAmend = ticketCache.getTicket(id);
-            log.info("amendTicket: ticket to amend: {}", ticketToAmend);
-            if (ticketToAmend != null) {
-                Ticket amendedTicked = ticketGenerator.amend(ticketToAmend, numberOfAdditionalLines);
-                ticketCache.updateTicket(id, amendedTicked);
-                log.info("amendTicket: amended ticket: {}", amendedTicked);
-                return amendedTicked;
-            }
+        Ticket ticketToAmend = ticketCache.getTicket(id);
+
+        if (ticketToAmend == null) {
+            log.info("amendTicket: ticket with id: {} not found in cache.", id);
+            throw new TicketNotFoundException(id);
         }
-        return null;
+
+        if (numberOfAdditionalLines <=0) {
+            log.info("amendTicket: cannot amend {} number of lines on a ticket.", numberOfAdditionalLines);
+            return ticketToAmend;
+        }
+
+        return amendTicket(ticketToAmend, numberOfAdditionalLines);
+    }
+
+    private Ticket amendTicket(Ticket ticketToAmend, int numberOfAdditionalLines) {
+        log.info("amendTicket: ticket to amend: {}", ticketToAmend);
+        Ticket amendedTicked = ticketGenerator.amend(ticketToAmend, numberOfAdditionalLines);
+        ticketCache.updateTicket(amendedTicked.getUniqueId(), amendedTicked);
+        log.info("amendTicket: amended ticket: {}", amendedTicked);
+        return amendedTicked;
     }
 
     @GetMapping(value = "/status/{id}")
@@ -82,8 +87,9 @@ public class RestService {
             log.info("getTicketStatus: id: {}, status: {}", id, ticketStatus);
             return ticketStatus;
         }
-        return null;
+        throw new TicketNotFoundException(id);
     }
 
     //allow for checking a ticket status by passing the ticket into the request.
+    //alow for creating a ticket with an id as a param, then you'll have to check the cache for existence...
 }
