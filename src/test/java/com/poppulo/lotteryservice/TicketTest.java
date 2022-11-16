@@ -17,6 +17,12 @@ public class TicketTest {
     }
 
     @Test
+    public void addLineTest() {
+        ticket.addLine(new Integer[]{0,1,1});
+        assertEquals(1, ticket.getNumberOfLines());
+    }
+
+    @Test
     public void sortResultTest() {
         ticket.addResult(new Result(1, "[0,1,2]"));
         ticket.addResult(new Result(10, "[0,1,1]"));
