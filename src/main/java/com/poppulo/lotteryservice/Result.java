@@ -14,18 +14,15 @@ public class Result implements Comparable<Result> {
         return score;
     }
 
-    public String getLine() {
-        return line;
-    }
-
     @Override
     public int compareTo(Result otherResult) {
         if (getScore() < otherResult.getScore()) return 1;
-        return -1;
+        else if (getScore() > otherResult.getScore()) return -1;
+        return 0;
     }
 
     @Override
     public String toString() {
-        return "Result: " + getScore() + "\tLine: " + getLine();
+        return "Result: " + score + "\tLine: " + line;
     }
 }
