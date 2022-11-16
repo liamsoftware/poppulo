@@ -13,17 +13,17 @@ public class RestService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    TicketCache ticketCache = new TicketCache();
-    TicketGenerator ticketGenerator = new RandomTicketGenerator();
-    RulePolicy rulePolicy = new SimpleRulePolicy();
+    private TicketCache ticketCache = new TicketCache();
+    private TicketGenerator ticketGenerator = new RandomTicketGenerator();
+    private RulePolicy rulePolicy = new SimpleRulePolicy();
+
+    public RestService() {
+    }
 
     public RestService(TicketCache ticketCache, TicketGenerator ticketGenerator, RulePolicy rulePolicy) {
         this.ticketCache = ticketCache;
         this.ticketGenerator = ticketGenerator;
         this.rulePolicy = rulePolicy;
-    }
-
-    public RestService() {
     }
 
     @PostMapping(value = "/ticket")

@@ -27,7 +27,6 @@ public class RandomTicketGeneratorTest {
     @Test
     public void generateTicketWithNewIdTest() {
         given(ticketCache.doesExist(anyLong())).willReturn(false);
-
         Ticket newTicket = randomTicketGenerator.generate(1L, 5);
         assertTrue(newTicket.getNumberOfLines() == 5);
     }
@@ -35,7 +34,6 @@ public class RandomTicketGeneratorTest {
     @Test
     public void generateTicketLinesExistWithValidNumbers() {
         given(ticketCache.doesExist(anyLong())).willReturn(false);
-
         Ticket newTicket = randomTicketGenerator.generate(1L, 50);
         List<Integer[]> lines = newTicket.getLines();
         for (Integer[] arr : lines) {

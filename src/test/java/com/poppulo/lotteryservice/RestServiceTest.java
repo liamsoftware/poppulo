@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKER_CONTAINS_SINGLE_MATCHING_VALUE;
+import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKET_CONTAINS_SINGLE_MATCHING_VALUE;
 import static com.poppulo.lotteryservice.SimpleRulePolicy.TICKET_CONTAINS_SUM_OF_TWO;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -99,15 +99,22 @@ public class RestServiceTest {
 
     @Test
     public void getTicketStatusInjectedTicketTest() {
-        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn(TICKER_CONTAINS_SINGLE_MATCHING_VALUE);
+        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn(TICKET_CONTAINS_SINGLE_MATCHING_VALUE);
         List<Integer[]> lines = new ArrayList<>();
-        Integer[] l = new Integer[3];
-        l[0] = 0;
-        l[1] = 0;
-        l[2] = 0;
-        lines.add(l);
+        Integer[] line = new Integer[]{0,0,0};
+        lines.add(line);
         given(ticketMock.getLines()).willReturn(lines);
         String result = restService.getTicketStatus(ticketMock);
-        assertEquals(TICKER_CONTAINS_SINGLE_MATCHING_VALUE, result);
+        assertEquals(TICKET_CONTAINS_SINGLE_MATCHING_VALUE, result);
+    }
+
+    @Test(expected = InvalidTicketException.class)
+    public void getTicketStatusInjectedInvalidTicketTest() {
+        given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn(TICKET_CONTAINS_SINGLE_MATCHING_VALUE);
+        List<Integer[]> lines = new ArrayList<>();
+        Integer[] line = new Integer[]{0,0,0,0};
+        lines.add(line);
+        given(ticketMock.getLines()).willReturn(lines);
+        restService.getTicketStatus(ticketMock);
     }
 }

@@ -18,7 +18,7 @@ public class SimpleRulePolicy implements RulePolicy {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public static final String TICKET_CONTAINS_SUM_OF_TWO = "10";
-    public static final String TICKER_CONTAINS_SINGLE_MATCHING_VALUE = "5";
+    public static final String TICKET_CONTAINS_SINGLE_MATCHING_VALUE = "5";
     public static final String TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST = "1";
     public static final String NOT_A_WINNING_TICKET = "0";
 
@@ -30,7 +30,7 @@ public class SimpleRulePolicy implements RulePolicy {
                 ticket.getNumberOfLines());
 
         if (isAnyLineASumOfTwo(lines)) return TICKET_CONTAINS_SUM_OF_TWO;
-        if (doesAnyLineContainASingleValue(lines)) return TICKER_CONTAINS_SINGLE_MATCHING_VALUE;
+        if (doesAnyLineContainASingleValue(lines)) return TICKET_CONTAINS_SINGLE_MATCHING_VALUE;
         if (doesAnyLineContainDifferingThirdAndFourthValuesFromTheFirst(lines)) return TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST;
         return NOT_A_WINNING_TICKET;
     }
