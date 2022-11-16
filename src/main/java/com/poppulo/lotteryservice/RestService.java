@@ -6,19 +6,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+//should this be split out into put, post, get classes?
+
 @RestController
 public class RestService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     TicketCache ticketCache = new TicketCache();
-    RandomTicketGenerator randomTicketGenerator = new RandomTicketGenerator();
-    SimpleRulePolicy simpleRulePolicy = new SimpleRulePolicy();
+    TicketGenerator ticketGenerator = new RandomTicketGenerator();
+    RulePolicy rulePolicy = new SimpleRulePolicy();
 
-    public RestService(TicketCache ticketCache, RandomTicketGenerator randomTicketGenerator, SimpleRulePolicy simpleRulePolicy) {
+    public RestService(TicketCache ticketCache, TicketGenerator ticketGenerator, RulePolicy rulePolicy) {
         this.ticketCache = ticketCache;
-        this.randomTicketGenerator = randomTicketGenerator;
-        this.simpleRulePolicy = simpleRulePolicy;
+        this.ticketGenerator = ticketGenerator;
+        this.rulePolicy = rulePolicy;
     }
 
     public RestService() {
@@ -27,7 +29,7 @@ public class RestService {
     @PostMapping(value = "/ticket")
     public Ticket createTicket() {
         long id = ticketCache.getNextId();
-        Ticket createdTicket = randomTicketGenerator.generate(id, 0);
+        Ticket createdTicket = ticketGenerator.generate(id, 0);
         if (ticketCache.addTicket(createdTicket)) {
             log.info("createTicket: created with id: {}", id);
             return createdTicket;
@@ -60,7 +62,7 @@ public class RestService {
             Ticket ticketToAmend = ticketCache.getTicket(id);
             log.info("amendTicket: ticket to amend: {}", ticketToAmend);
             if (ticketToAmend != null) {
-                Ticket amendedTicked = randomTicketGenerator.amend(ticketToAmend, numberOfAdditionalLines);
+                Ticket amendedTicked = ticketGenerator.amend(ticketToAmend, numberOfAdditionalLines);
                 ticketCache.updateTicket(id, amendedTicked);
                 log.info("amendTicket: amended ticket: {}", amendedTicked);
                 return amendedTicked;
@@ -73,7 +75,7 @@ public class RestService {
     public String getTicketStatus(@PathVariable long id) {
         Ticket ticketToValidate = ticketCache.getTicket(id);
         if (ticketToValidate != null) {
-            String ticketStatus = simpleRulePolicy.getResult(ticketToValidate);
+            String ticketStatus = rulePolicy.getResult(ticketToValidate);
             log.info("getTicketStatus: id: {}, status: {}", id, ticketStatus);
             return ticketStatus;
         }
