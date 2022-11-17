@@ -1,8 +1,5 @@
 package com.poppulo.lotteryservice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +9,6 @@ import java.util.List;
  * Has unique ID and list of lines.
  */
 public class Ticket {
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private long uniqueId;
     private List<Integer[]> lines = new ArrayList<>();

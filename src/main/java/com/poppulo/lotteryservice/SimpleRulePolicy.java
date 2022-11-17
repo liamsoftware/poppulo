@@ -23,7 +23,6 @@ public class SimpleRulePolicy implements RulePolicy {
     public static final int TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST = 1;
     public static final int NOT_A_WINNING_TICKET = 0;
 
-    //get the big o notation for these - worse case analysis
     public Ticket computeResult(Ticket ticket) {
         if (ticket.isResultChecked()) {
             return ticket;
