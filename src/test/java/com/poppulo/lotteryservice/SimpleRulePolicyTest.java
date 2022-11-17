@@ -72,7 +72,7 @@ public class SimpleRulePolicyTest {
     @Test
     public void getResultZeroSecondTest() {
         Ticket ticket = new Ticket(1L);
-        Integer[] arr = {0, 2, 2};
+        Integer[] arr = {2, 0, 2};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
         Result result = resultTicket.getResults().get(0);
