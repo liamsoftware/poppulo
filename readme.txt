@@ -28,6 +28,7 @@ Technology Used:
 Limitations:
 - Caching: used a hashmap to cache tickets, but could use an external cache (such as Redis) and persist tickets to a DB.
 - Calculating Results: calculating results could be a bottleneck if many tickets are queued to be checked. This may cause an out of memory exception.
+- BDD end to end testing:
 
 Scaling:
 - This app should be containerised and the cache should be external. Then many instances of the app could be deployed and traffic distributed across the instances by a load balancer.

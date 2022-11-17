@@ -71,9 +71,6 @@ public class SimpleRulePolicy implements RulePolicy {
     }
 
     private boolean doesContainDifferingThirdAndFourthValuesFromTheFirst(Integer[] aLine) {
-        if (!Objects.equals(aLine[1], aLine[2])) {
-            return !Objects.equals(aLine[0], aLine[1]) && !Objects.equals(aLine[0], aLine[2]);
-        }
-        return false;
+        return !Objects.equals(aLine[0], aLine[1]) && !Objects.equals(aLine[0], aLine[2]);
     }
 }
