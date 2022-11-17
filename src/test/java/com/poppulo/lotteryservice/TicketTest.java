@@ -24,12 +24,12 @@ public class TicketTest {
 
     @Test
     public void sortResultTest() {
-        ticket.addResult(new Result(1, "[0,1,2]"));
-        ticket.addResult(new Result(10, "[0,1,1]"));
-        ticket.addResult(new Result(0, "[1,1,2]"));
-        ticket.addResult(new Result(5, "[0,0,0]"));
+        ticket.addResult(new LineResult(1, "[0,1,2]"));
+        ticket.addResult(new LineResult(10, "[0,1,1]"));
+        ticket.addResult(new LineResult(0, "[1,1,2]"));
+        ticket.addResult(new LineResult(5, "[0,0,0]"));
         ticket.sortResults();
-        List<Result> results = ticket.getResults();
-        assertEquals(10, results.get(0).getScore());
+        List<LineResult> lineResults = ticket.getResults();
+        assertEquals(10, lineResults.get(0).getResult());
     }
 }

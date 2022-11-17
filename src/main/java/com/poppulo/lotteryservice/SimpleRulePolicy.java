@@ -35,7 +35,7 @@ public class SimpleRulePolicy implements RulePolicy {
 
         lines.forEach(aLine -> {
             int score = checkResult(aLine);
-            Result r = new Result(score, Arrays.toString(aLine));
+            LineResult r = new LineResult(score, Arrays.toString(aLine));
             ticket.addResult(r);
         });
 

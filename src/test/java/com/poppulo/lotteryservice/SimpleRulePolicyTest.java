@@ -35,8 +35,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 1, 1};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        Result result = resultTicket.getResults().get(0);
-        assertEquals(10, result.getScore());
+        LineResult lineResult = resultTicket.getResults().get(0);
+        assertEquals(10, lineResult.getResult());
     }
 
     @Test
@@ -45,8 +45,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 0, 0};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        Result result = resultTicket.getResults().get(0);
-        assertEquals(5, result.getScore());
+        LineResult lineResult = resultTicket.getResults().get(0);
+        assertEquals(5, lineResult.getResult());
     }
 
     @Test
@@ -55,8 +55,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 2, 2};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        Result result = resultTicket.getResults().get(0);
-        assertEquals(1, result.getScore());
+        LineResult lineResult = resultTicket.getResults().get(0);
+        assertEquals(1, lineResult.getResult());
     }
 
     @Test
@@ -65,8 +65,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {1, 2, 1};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        Result result = resultTicket.getResults().get(0);
-        assertEquals(0, result.getScore());
+        LineResult lineResult = resultTicket.getResults().get(0);
+        assertEquals(0, lineResult.getResult());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {2, 0, 2};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        Result result = resultTicket.getResults().get(0);
-        assertEquals(0, result.getScore());
+        LineResult lineResult = resultTicket.getResults().get(0);
+        assertEquals(0, lineResult.getResult());
     }
 
     @Test

@@ -18,7 +18,7 @@ public class Ticket {
     private long uniqueId;
     private List<Integer[]> lines = new ArrayList<>();
     private boolean resultChecked = false;
-    private List<Result> results =  new ArrayList<>();
+    private List<LineResult> lineResults =  new ArrayList<>();
 
     public Ticket(long uniqueId) {
         this.uniqueId = uniqueId;
@@ -51,16 +51,16 @@ public class Ticket {
         return resultChecked; //check in case pass by reference or pass by value.
     }
 
-    public List<Result> getResults() {
-        return results;
+    public List<LineResult> getResults() {
+        return lineResults;
     }
 
     public void sortResults() {
-        Collections.sort(results);
+        Collections.sort(lineResults);
     }
 
-    public void addResult(Result result) {
-        results.add(result);
+    public void addResult(LineResult lineResult) {
+        lineResults.add(lineResult);
     }
 
     @Override

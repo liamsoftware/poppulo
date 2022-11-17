@@ -7,13 +7,13 @@ A collection of REST calls that can be used with Postman have been included in t
 
 Brief Class Description/Design:
 - RestService: contains all endpoints
-- Ticket: represents a lottery ticket, stores a list of the results for each line of the ticket.
+- Ticket: represents a lottery ticket, stores a list of the lineResults for each line of the ticket.
 - TicketGenerator: interface that allows for generating and amending tickets.
 - RandomTicketGenerator: implements TicketGenerator. Creates a ticket with n lines, amends a ticket with n additional lines if the ticket has not been checked.
 - TicketCache: Cache of tickets with the unique id as the key, tickets as the value.
-- RulePolicy: interface that allows ticket line results to be checked.
-- SimpleRulePolicy: implements RulePolicy. Calculates the result for each line on a ticket and adds that result to the ticket.
-- Result: stores the result for a line. Implements the Comparator interface to allow ordering.
+- RulePolicy: interface that allows ticket line lineResults to be checked.
+- SimpleRulePolicy: implements RulePolicy. Calculates the lineResult for each line on a ticket and adds that lineResult to the ticket.
+- Result: stores the lineResult for a line. Implements the Comparator interface to allow ordering.
 - IllegalTicketAmendException: thrown if a client tries to update a ticket that has already been checked.
 - TicketNotFoundException: thrown if a client tries to check or update a ticket that is not in the cache.
 
@@ -27,7 +27,7 @@ Technology Used:
 
 Limitations:
 - Caching: used a hashmap to cache tickets, but could use an external cache (such as Redis) and persist tickets to a DB.
-- Calculating Results: calculating results could be a bottleneck if many tickets are queued to be checked. This may cause an out of memory exception.
+- Calculating Results: calculating lineResults could be a bottleneck if many tickets are queued to be checked. This may cause an out of memory exception.
 - BDD end to end testing:
 
 Scaling:
