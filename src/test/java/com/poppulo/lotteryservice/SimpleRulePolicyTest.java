@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static com.poppulo.lotteryservice.SimpleRulePolicy.CHECK_COMPLETE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -26,7 +27,7 @@ public class SimpleRulePolicyTest {
     public void setTicketCheckFlagWhenNotCheckedTest() {
         given(ticket.isResultChecked()).willReturn(false);
         simpleRulePolicy.computeResult(ticket);
-        verify(ticket, times(1)).setChecked();
+        verify(ticket, times(1)).setResultChecked(CHECK_COMPLETE);
     }
 
     @Test
@@ -35,7 +36,7 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 1, 1};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        LineResult lineResult = resultTicket.getResults().get(0);
+        LineResult lineResult = resultTicket.getLineResults().get(0);
         assertEquals(10, lineResult.getResult());
     }
 
@@ -45,7 +46,7 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 0, 0};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        LineResult lineResult = resultTicket.getResults().get(0);
+        LineResult lineResult = resultTicket.getLineResults().get(0);
         assertEquals(5, lineResult.getResult());
     }
 
@@ -55,7 +56,7 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {0, 2, 2};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        LineResult lineResult = resultTicket.getResults().get(0);
+        LineResult lineResult = resultTicket.getLineResults().get(0);
         assertEquals(1, lineResult.getResult());
     }
 
@@ -65,7 +66,7 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {1, 2, 1};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        LineResult lineResult = resultTicket.getResults().get(0);
+        LineResult lineResult = resultTicket.getLineResults().get(0);
         assertEquals(0, lineResult.getResult());
     }
 
@@ -75,14 +76,14 @@ public class SimpleRulePolicyTest {
         Integer[] arr = {2, 0, 2};
         ticket.addLine(arr);
         Ticket resultTicket = simpleRulePolicy.computeResult(ticket);
-        LineResult lineResult = resultTicket.getResults().get(0);
+        LineResult lineResult = resultTicket.getLineResults().get(0);
         assertEquals(0, lineResult.getResult());
     }
 
     @Test
     public void returnOriginalTicketWithoutUpdateWhenCheckFlagIsSet() {
         Ticket ticket = new Ticket(1L);
-        ticket.setChecked();
+        ticket.setResultChecked(CHECK_COMPLETE);
         Ticket returnedTicket = simpleRulePolicy.computeResult(ticket);
         assertEquals(ticket, returnedTicket);
     }

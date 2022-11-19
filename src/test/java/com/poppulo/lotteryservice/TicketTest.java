@@ -29,7 +29,7 @@ public class TicketTest {
         ticket.addResult(new LineResult(0, "[1,1,2]"));
         ticket.addResult(new LineResult(5, "[0,0,0]"));
         ticket.sortResults();
-        List<LineResult> lineResults = ticket.getResults();
+        List<LineResult> lineResults = ticket.getLineResults();
         assertEquals(10, lineResults.get(0).getResult());
     }
 }

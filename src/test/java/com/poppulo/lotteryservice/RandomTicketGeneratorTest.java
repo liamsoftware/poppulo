@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static com.poppulo.lotteryservice.SimpleRulePolicy.CHECK_COMPLETE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -54,7 +55,7 @@ public class RandomTicketGeneratorTest {
     @Test
     public void amendCheckedTicketTest() {
         Ticket aTicketToAmend = new Ticket(1L);
-        aTicketToAmend.setChecked();
+        aTicketToAmend.setResultChecked(CHECK_COMPLETE);
         Ticket newTicket = randomTicketGenerator.amend(aTicketToAmend, 5);
         assertEquals(0, newTicket.getNumberOfLines());
     }

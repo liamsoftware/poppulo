@@ -22,6 +22,7 @@ public class SimpleRulePolicy implements RulePolicy {
     public static final int TICKET_CONTAINS_SINGLE_MATCHING_VALUE = 5;
     public static final int TICKET_CONTAINS_SECOND_AND_THIRD_VALUES_DIFFERENT_FROM_FIRST = 1;
     public static final int NOT_A_WINNING_TICKET = 0;
+    public static boolean CHECK_COMPLETE = true;
 
     public Ticket computeResult(Ticket ticket) {
         if (ticket.isResultChecked()) {
@@ -39,7 +40,7 @@ public class SimpleRulePolicy implements RulePolicy {
         });
 
         ticket.sortResults();
-        ticket.setChecked();
+        ticket.setResultChecked(CHECK_COMPLETE);
         return ticket;
     }
 

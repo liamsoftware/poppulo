@@ -57,7 +57,7 @@ public class IntegrationTest {
         List<Ticket> tickets = restService.getAllTickets();
         tickets.stream().forEach(ticket -> {
             Ticket ticketResult = restService.getTicketStatus(ticket.getUniqueId());
-            assertEquals(2, ticketResult.getResults().size());
+            assertEquals(2, ticketResult.getLineResults().size());
         });
     }
 

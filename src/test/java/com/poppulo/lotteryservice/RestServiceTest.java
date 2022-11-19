@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.poppulo.lotteryservice.SimpleRulePolicy.CHECK_COMPLETE;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
@@ -77,7 +78,7 @@ public class RestServiceTest {
     @Test(expected = IllegalTicketAmendException.class)
     public void amendTicketAlreadyCheckedTest() {
         Ticket t = new Ticket(1L);
-        t.setChecked();
+        t.setResultChecked(CHECK_COMPLETE);
         given(ticketCache.getTicket(1L)).willReturn(t);
         restService.amendTicket(1L, -1);
     }
@@ -85,10 +86,10 @@ public class RestServiceTest {
     @Test
     public void getTicketStatusTest() {
         given(ticketCache.getTicket(anyLong())).willReturn(ticketMock);
-        given(ticketMock.getResults()).willReturn(new ArrayList<>());
+        given(ticketMock.getLineResults()).willReturn(new ArrayList<>());
         given(simpleRulePolicy.computeResult(any(Ticket.class))).willReturn(ticketMock);
         Ticket result = restService.getTicketStatus(3L);
-        assertEquals(0, result.getResults().size());
+        assertEquals(0, result.getLineResults().size());
     }
 
     @Test

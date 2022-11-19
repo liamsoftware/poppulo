@@ -1,13 +1,14 @@
 package com.poppulo.lotteryservice;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Represents a lottery ticket.
- * Has unique ID and list of lines.
- */
+@Getter @Setter @NoArgsConstructor
 public class Ticket {
 
     private long uniqueId;
@@ -19,35 +20,12 @@ public class Ticket {
         this.uniqueId = uniqueId;
     }
 
-    public Ticket() {
-    }
-
-    public List<Integer[]> getLines() {
-        return lines;
-    }
-
-    public long getUniqueId() {
-        return this.uniqueId;
-    }
-
     public void addLine(Integer[] line) {
         lines.add(line);
     }
 
     public int getNumberOfLines() {
         return lines.size();
-    }
-
-    public void setChecked() {
-        resultChecked = true;
-    }
-
-    public boolean isResultChecked() {
-        return resultChecked; //check in case pass by reference or pass by value.
-    }
-
-    public List<LineResult> getResults() {
-        return lineResults;
     }
 
     public void sortResults() {
