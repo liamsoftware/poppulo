@@ -2,6 +2,7 @@ package com.poppulo.lotteryservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Objects;
  * Score 1 if second and third values are different from the first.
  * Score 0 otherwise.
  */
+@Component
 public class SimpleRulePolicy implements RulePolicy {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());

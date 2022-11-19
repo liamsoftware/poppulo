@@ -3,6 +3,7 @@ package com.poppulo.lotteryservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
@@ -11,6 +12,7 @@ import java.util.Random;
  * Creating a ticket takes an id and the number of lines to add to the ticket.
  * Amending a ticket takes a ticket and the number of extra lines to tadd to the ticket.
  */
+@Component
 public class RandomTicketGenerator implements TicketGenerator {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());

@@ -2,6 +2,7 @@ package com.poppulo.lotteryservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +12,12 @@ public class RestService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private TicketCache ticketCache = new TicketCache();
-    private TicketGenerator ticketGenerator = new RandomTicketGenerator();
-    private RulePolicy rulePolicy = new SimpleRulePolicy();
+    @Autowired
+    private TicketCache ticketCache;
+    @Autowired
+    private TicketGenerator ticketGenerator;
+    @Autowired
+    private RulePolicy rulePolicy;
 
     public RestService() {
     }
